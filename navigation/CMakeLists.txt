@@ -12,7 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  move_base_msgs
+  actionlib
 )
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -118,6 +122,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
+  ${Qt5Widgets_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -135,6 +140,11 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/navigation_node.cpp)
+
+add_executable(controller_node src/controller.cpp)
+target_link_libraries(controller_node
+    ${catkin_LIBRARIES} Qt5::Widgets
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
